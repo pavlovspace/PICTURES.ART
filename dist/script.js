@@ -13,7 +13,9 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export */   "default": () => (__WEBPACK_DEFAULT_EXPORT__)
 /* harmony export */ });
 const modals = () => {
-  function bindModal(triggerSelector, modalSelector, closeSelector, closeClickOverlay) {
+  let btnPressed;
+  let removedBtn;
+  function bindModal(triggerSelector, modalSelector, closeSelector, destroy = false) {
     const triggers = document.querySelectorAll(triggerSelector),
       modal = document.querySelector(modalSelector),
       close = document.querySelector(closeSelector),
@@ -21,13 +23,20 @@ const modals = () => {
       scroll = calcScroll();
 
     // Opening Modal on Trigger Click
+
     triggers.forEach(item => {
       item.addEventListener('click', e => {
         if (e.target) {
           e.preventDefault();
         }
+        btnPressed = true;
+        if (destroy) {
+          removedBtn = item;
+          item.remove();
+        }
         windows.forEach(item => {
           item.style.display = 'none';
+          item.classList.add('animated', 'fadeIn');
         });
         modal.style.display = 'block';
         document.body.style.overflow = 'hidden';
@@ -47,10 +56,13 @@ const modals = () => {
 
     // Closing Modal on Overlay Click
     modal.addEventListener('click', e => {
-      if (e.target === modal && closeClickOverlay === true) {
+      if (e.target === modal) {
         windows.forEach(element => {
           element.style.display = 'none';
         });
+        if (removedBtn) {
+          document.body.appendChild(removedBtn);
+        }
         modal.style.display = 'none';
         document.body.style.overflow = '';
         document.body.style.marginRight = `0px`;
@@ -69,28 +81,42 @@ const modals = () => {
       div.remove();
       return scrollWidth;
     }
-
-    // Function to display a modal window after a certain time
-    function showModalByTime(selector, time) {
-      setTimeout(() => {
-        let display = false;
-        document.querySelectorAll('[data-modal]').forEach(element => {
-          if (getComputedStyle(element).display !== 'none') {
-            display = 'block';
-          }
-        });
-        if (display === false) {
-          let selectorPopup = document.querySelector(selector);
-          selectorPopup.style.display = 'block';
-          document.body.style.overflow = 'hidden';
-        }
-      }, time);
-    }
-    // showModalByTime('.popup-consultation', 60000)
   }
 
-  bindModal('.button-consultation', '.popup-consultation', '.popup-consultation .popup-close', true);
-  bindModal('.button-design', '.popup-design', '.popup-design .popup-close', true);
+  // Function to display a modal window after a certain time
+  function showModalByTime(selector, time) {
+    setTimeout(() => {
+      let display;
+      document.querySelectorAll('[data-modal]').forEach(element => {
+        if (getComputedStyle(element).display !== 'none') {
+          display = 'block';
+        }
+      });
+      if (!display) {
+        let selectorPopup = document.querySelector(selector);
+        selectorPopup.style.display = 'block';
+        document.body.style.overflow = 'hidden';
+        scroll = calcScroll();
+        document.body.style.marginRight = `${scroll}px`;
+      }
+    }, time);
+  }
+
+  // if the user did not click on the button popup will appear
+  function openByScroll(selector) {
+    window.addEventListener('scroll', () => {
+      let scrollHeight = Math.max(document.documentElement.scrollHeight, document.body.scrollHeight);
+      if (!btnPressed && window.scrollY + document.documentElement.clientHeight >= scrollHeight) {
+        document.querySelector(selector).click();
+      }
+    });
+  }
+
+  // showModalByTime('.popup-consultation', 60000)
+  bindModal('.button-consultation', '.popup-consultation', '.popup-consultation .popup-close');
+  bindModal('.button-design', '.popup-design', '.popup-design .popup-close');
+  openByScroll('.fixed-gift');
+  bindModal('.fixed-gift', '.popup-gift', '.popup-gift .popup-close', true);
 };
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (modals);
 
