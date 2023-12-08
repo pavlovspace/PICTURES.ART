@@ -3,7 +3,7 @@ const sliders = (slides, direction, prev, next) => {
         paused = false
 
     const items = document.querySelectorAll(slides)
-
+ 
     function showSlides(number) {
         if (number > items.length) {
             slideIndex = 1
@@ -15,8 +15,7 @@ const sliders = (slides, direction, prev, next) => {
 
         items.forEach((element) => {
             element.classList.add('animated')
-            element.style.display = 'none'
-        })
+            element.style.display = 'none' })
         items[slideIndex - 1].style.display = 'block'
     }
     showSlides(slideIndex)
@@ -46,16 +45,16 @@ const sliders = (slides, direction, prev, next) => {
 
     function activateAnimation() {
         if (direction === 'vertical') {
-            paused = setInterval(() => {
+            // paused = setInterval(() => {
                 plusSlide(1)
                 items[slideIndex - 1].classList.add('slideInDown')
-            }, 3000)
+            // }, 3000)
         } else {
-            paused = setInterval(() => {
+            // paused = setInterval(() => {
                 plusSlide(1)
                 items[slideIndex - 1].classList.remove('slideInLeft')
                 items[slideIndex - 1].classList.add('slideInRight')
-            }, 3000)
+            // }, 3000)
         }
     }
 
