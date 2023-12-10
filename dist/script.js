@@ -2,6 +2,68 @@
 /******/ 	"use strict";
 /******/ 	var __webpack_modules__ = ({
 
+/***/ "./src/js/modules/calculator.js":
+/*!**************************************!*\
+  !*** ./src/js/modules/calculator.js ***!
+  \**************************************/
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   "default": () => (__WEBPACK_DEFAULT_EXPORT__)
+/* harmony export */ });
+const calculator = (size, material, options, promocode, showResult) => {
+  let price = 0,
+    sizePrice = 0,
+    materialPrice = 0,
+    optionPrice = 0;
+  const sizeBlock = document.querySelector(size),
+    materialBlock = document.querySelector(material),
+    optionsBlock = document.querySelector(options),
+    promocodeBlock = document.querySelector(promocode),
+    showPrice = document.querySelector(showResult);
+  const SIZE_PRICES = {
+    '40x50': 160,
+    '50x70': 160,
+    '70x70': 160,
+    '70x100': 160
+  };
+  const MATERIAL_PRICES = {
+    'Płótno z włókna': 100,
+    'Lniana płótno': 150,
+    'Bawełniane płótno': 230
+  };
+  const OPTION_PRICES = {
+    'Pokrycie żel artystyczny': 50,
+    'Szybkie wykonanie': 50,
+    'Dostawa gotowych prac': 70
+  };
+  const updateTotalPrice = () => {
+    const sizeValue = sizeBlock.value;
+    const materialValue = materialBlock.value;
+    const optionValue = optionsBlock.value;
+    sizePrice = SIZE_PRICES[sizeValue] || 0;
+    materialPrice = MATERIAL_PRICES[materialValue] || 0;
+    optionPrice = OPTION_PRICES[optionValue] || 0;
+    if (sizeValue == '' || materialValue == '') {
+      showPrice.textContent = 'Proszę wybrać rozmiar i materiał obrazu';
+    } else if (promocodeBlock.value === 'IWANTPOPART') {
+      showPrice.textContent = Math.round(price * 0.7);
+    } else {
+      price = Math.round(Number(sizePrice) + Number(materialPrice) + Number(optionPrice));
+      console.log(showPrice.textContent = price + ' zł');
+      showPrice.textContent = price + 'zł';
+    }
+  };
+  sizeBlock.addEventListener('change', updateTotalPrice);
+  materialBlock.addEventListener('change', updateTotalPrice);
+  optionsBlock.addEventListener('change', updateTotalPrice);
+  promocodeBlock.addEventListener('input', updateTotalPrice);
+};
+/* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (calculator);
+
+/***/ }),
+
 /***/ "./src/js/modules/forms.js":
 /*!*********************************!*\
   !*** ./src/js/modules/forms.js ***!
@@ -351,7 +413,7 @@ const sliders = (slides, direction, prev, next) => {
       items[slideIndex - 1].classList.add('slideInLeft');
     });
   } catch (e) {
-    console.log(e);
+    // console.log(e)
   }
   function activateAnimation() {
     if (direction === 'vertical') {
@@ -477,6 +539,8 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _modules_forms__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ./modules/forms */ "./src/js/modules/forms.js");
 /* harmony import */ var _modules_mask__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ./modules/mask */ "./src/js/modules/mask.js");
 /* harmony import */ var _modules_showMoreStyles__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ./modules/showMoreStyles */ "./src/js/modules/showMoreStyles.js");
+/* harmony import */ var _modules_calculator__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! ./modules/calculator */ "./src/js/modules/calculator.js");
+
 
 
 
@@ -491,6 +555,7 @@ window.addEventListener('DOMContentLoaded', () => {
   (0,_modules_forms__WEBPACK_IMPORTED_MODULE_2__["default"])();
   (0,_modules_mask__WEBPACK_IMPORTED_MODULE_3__["default"])('[name="phone"]');
   (0,_modules_showMoreStyles__WEBPACK_IMPORTED_MODULE_4__["default"])('.button-styles', '#styles .row');
+  (0,_modules_calculator__WEBPACK_IMPORTED_MODULE_5__["default"])('#size', '#material', '#options', '.promocode', '.calc-price');
 });
 })();
 
