@@ -20,5 +20,24 @@
             "title": "sharj",
             "link": "#sharj"
         }
+    ],
+
+    "prices": [
+        {
+            "40x50": 160,
+            "50x70": 160,
+            "70x70": 160,
+            "70x100": 160
+        },
+        {
+            "Płótno z włókna": 100,
+            "Lniana płótno": 150,
+            "Bawełniane płótno": 230
+        },
+        {
+            "Pokrycie żel artystyczny": 50,
+            "Szybkie wykonanie": 65,
+            "Dostawa gotowych prac": 70
+        }
     ]
 }

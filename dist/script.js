@@ -12,6 +12,8 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export */ __webpack_require__.d(__webpack_exports__, {
 /* harmony export */   "default": () => (__WEBPACK_DEFAULT_EXPORT__)
 /* harmony export */ });
+/* harmony import */ var _services_requests__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ../services/requests */ "./src/js/services/requests.js");
+
 const calculator = (size, material, options, promocode, showResult) => {
   let price = 0,
     sizePrice = 0,
@@ -22,37 +24,33 @@ const calculator = (size, material, options, promocode, showResult) => {
     optionsBlock = document.querySelector(options),
     promocodeBlock = document.querySelector(promocode),
     showPrice = document.querySelector(showResult);
-  const SIZE_PRICES = {
-    '40x50': 160,
-    '50x70': 160,
-    '70x70': 160,
-    '70x100': 160
-  };
-  const MATERIAL_PRICES = {
-    'Płótno z włókna': 100,
-    'Lniana płótno': 150,
-    'Bawełniane płótno': 230
-  };
-  const OPTION_PRICES = {
-    'Pokrycie żel artystyczny': 50,
-    'Szybkie wykonanie': 50,
-    'Dostawa gotowych prac': 70
-  };
   const updateTotalPrice = () => {
     const sizeValue = sizeBlock.value;
     const materialValue = materialBlock.value;
     const optionValue = optionsBlock.value;
-    sizePrice = SIZE_PRICES[sizeValue] || 0;
-    materialPrice = MATERIAL_PRICES[materialValue] || 0;
-    optionPrice = OPTION_PRICES[optionValue] || 0;
-    if (sizeValue == '' || materialValue == '') {
-      showPrice.textContent = 'Proszę wybrać rozmiar i materiał obrazu';
-    } else if (promocodeBlock.value === 'IWANTPOPART') {
-      showPrice.textContent = Math.round(price * 0.7);
-    } else {
-      price = Math.round(Number(sizePrice) + Number(materialPrice) + Number(optionPrice));
-      console.log(showPrice.textContent = price + ' zł');
-      showPrice.textContent = price + 'zł';
+    (0,_services_requests__WEBPACK_IMPORTED_MODULE_0__.getResource)('assets/db.json').then(res => getPrices(res.prices)).catch(error => console.log(error));
+    function getPrices(response) {
+      const sizeItem = response[0][sizeValue];
+      const materialItem = response[1][materialValue];
+      const optionItem = response[2][optionValue];
+      sizePrice = sizeItem || 0;
+      materialPrice = materialItem || 0;
+      optionPrice = optionItem || 0;
+      console.log('Size Price:', sizePrice);
+      console.log('Material Price:', materialPrice);
+      console.log('Option Price:', optionPrice);
+      updateTotalPrice();
+    }
+    function updateTotalPrice() {
+      if (sizeValue === '' || materialValue === '') {
+        showPrice.textContent = 'Proszę wybrać rozmiar i materiał obrazu';
+      } else if (promocodeBlock.value === 'IWANTPOPART') {
+        showPrice.textContent = Math.round(price * 0.7);
+      } else {
+        price = Math.round(Number(sizePrice) + Number(materialPrice) + Number(optionPrice));
+        console.log(showPrice.textContent = price + ' zł');
+        showPrice.textContent = price + 'zł';
+      }
     }
   };
   sizeBlock.addEventListener('change', updateTotalPrice);
