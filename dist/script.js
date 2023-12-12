@@ -62,6 +62,57 @@ const calculator = (size, material, options, promocode, showResult) => {
 
 /***/ }),
 
+/***/ "./src/js/modules/filter.js":
+/*!**********************************!*\
+  !*** ./src/js/modules/filter.js ***!
+  \**********************************/
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   "default": () => (__WEBPACK_DEFAULT_EXPORT__)
+/* harmony export */ });
+const filter = () => {
+  const menu = document.querySelector('.portfolio-menu');
+  const items = menu.querySelectorAll('li');
+  const wrapper = document.querySelector('.portfolio-wrapper');
+  const no = document.querySelector('.portfolio-no');
+  const typeFilter = markType => {
+    wrapper.querySelectorAll('.all').forEach(mark => {
+      mark.style.display = 'none';
+      mark.classList.remove('animated', 'fadeIn');
+    });
+    if (markType) {
+      markType.forEach(mark => {
+        mark.style.display = 'block';
+        mark.classList.add('animated', 'fadeIn');
+      });
+    }
+  };
+  menu.addEventListener('click', e => {
+    const target = e.target,
+      targetClass = target.classList,
+      filterType = target.classList[0];
+    if (target && target.tagName == 'LI') {
+      items.forEach(btn => btn.classList.remove('active'));
+      target.classList.add('active');
+      const markType = wrapper.querySelectorAll(`.${filterType}`);
+      typeFilter(markType);
+    }
+    if (targetClass.contains('grandmother') || targetClass.contains('granddad')) {
+      no.style.display = 'block';
+      no.classList.add('animated', 'fadeIn');
+    } else {
+      no.style.display = 'none';
+      no.classList.remove('animated', 'fadeIn');
+    }
+    console.log(target.className);
+  });
+};
+/* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (filter);
+
+/***/ }),
+
 /***/ "./src/js/modules/forms.js":
 /*!*********************************!*\
   !*** ./src/js/modules/forms.js ***!
@@ -538,6 +589,8 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _modules_mask__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ./modules/mask */ "./src/js/modules/mask.js");
 /* harmony import */ var _modules_showMoreStyles__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ./modules/showMoreStyles */ "./src/js/modules/showMoreStyles.js");
 /* harmony import */ var _modules_calculator__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! ./modules/calculator */ "./src/js/modules/calculator.js");
+/* harmony import */ var _modules_filter__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(/*! ./modules/filter */ "./src/js/modules/filter.js");
+
 
 
 
@@ -554,6 +607,7 @@ window.addEventListener('DOMContentLoaded', () => {
   (0,_modules_mask__WEBPACK_IMPORTED_MODULE_3__["default"])('[name="phone"]');
   (0,_modules_showMoreStyles__WEBPACK_IMPORTED_MODULE_4__["default"])('.button-styles', '#styles .row');
   (0,_modules_calculator__WEBPACK_IMPORTED_MODULE_5__["default"])('#size', '#material', '#options', '.promocode', '.calc-price');
+  (0,_modules_filter__WEBPACK_IMPORTED_MODULE_6__["default"])();
 });
 })();
 
