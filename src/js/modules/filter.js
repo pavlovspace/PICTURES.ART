@@ -37,7 +37,6 @@ const filter = () => {
             no.style.display = 'none'
             no.classList.remove('animated', 'fadeIn')
         }
-        console.log(target.className)
     })
 }
 

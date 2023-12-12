@@ -106,7 +106,6 @@ const filter = () => {
       no.style.display = 'none';
       no.classList.remove('animated', 'fadeIn');
     }
-    console.log(target.className);
   });
 };
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (filter);
@@ -376,6 +375,49 @@ const modals = () => {
 
 /***/ }),
 
+/***/ "./src/js/modules/pictureSize.js":
+/*!***************************************!*\
+  !*** ./src/js/modules/pictureSize.js ***!
+  \***************************************/
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   "default": () => (__WEBPACK_DEFAULT_EXPORT__)
+/* harmony export */ });
+const pictureSize = imgSelector => {
+  const imgBlocks = document.querySelectorAll(imgSelector);
+  function showImg(block) {
+    const img = block.querySelector('img');
+
+    // img/sizes.png  ==>  img/sizes-1.png
+    img.src = img.src.slice(0, -4) + '-1.png';
+
+    // 'p:not(.sizes-hit' =  find all <p>tag  which do not have the class .sizes-hit
+    block.querySelectorAll('p:not(.sizes-hit').forEach(p => {
+      p.style.display = 'none';
+    });
+  }
+  function hideImg(block) {
+    const img = block.querySelector('img');
+    img.src = img.src.slice(0, -6) + '.png';
+    block.querySelectorAll('p:not(.sizes-hit').forEach(p => {
+      p.style.display = 'block';
+    });
+  }
+  imgBlocks.forEach(element => {
+    element.addEventListener('mouseenter', () => {
+      showImg(element);
+    });
+    element.addEventListener('mouseleave', () => {
+      hideImg(element);
+    });
+  });
+};
+/* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (pictureSize);
+
+/***/ }),
+
 /***/ "./src/js/modules/showMoreStyles.js":
 /*!******************************************!*\
   !*** ./src/js/modules/showMoreStyles.js ***!
@@ -590,6 +632,8 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _modules_showMoreStyles__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ./modules/showMoreStyles */ "./src/js/modules/showMoreStyles.js");
 /* harmony import */ var _modules_calculator__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! ./modules/calculator */ "./src/js/modules/calculator.js");
 /* harmony import */ var _modules_filter__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(/*! ./modules/filter */ "./src/js/modules/filter.js");
+/* harmony import */ var _modules_pictureSize__WEBPACK_IMPORTED_MODULE_7__ = __webpack_require__(/*! ./modules/pictureSize */ "./src/js/modules/pictureSize.js");
+
 
 
 
@@ -608,6 +652,7 @@ window.addEventListener('DOMContentLoaded', () => {
   (0,_modules_showMoreStyles__WEBPACK_IMPORTED_MODULE_4__["default"])('.button-styles', '#styles .row');
   (0,_modules_calculator__WEBPACK_IMPORTED_MODULE_5__["default"])('#size', '#material', '#options', '.promocode', '.calc-price');
   (0,_modules_filter__WEBPACK_IMPORTED_MODULE_6__["default"])();
+  (0,_modules_pictureSize__WEBPACK_IMPORTED_MODULE_7__["default"])('.sizes-block');
 });
 })();
 
