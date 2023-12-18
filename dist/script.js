@@ -2,6 +2,41 @@
 /******/ 	"use strict";
 /******/ 	var __webpack_modules__ = ({
 
+/***/ "./src/js/modules/accordion.js":
+/*!*************************************!*\
+  !*** ./src/js/modules/accordion.js ***!
+  \*************************************/
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   "default": () => (__WEBPACK_DEFAULT_EXPORT__)
+/* harmony export */ });
+const accordion = triggersSelector => {
+  const btns = document.querySelectorAll(triggersSelector);
+  btns.forEach(btn => {
+    btn.addEventListener('click', function () {
+      if (!this.classList.contains('active-style')) {
+        btns.forEach(btn => {
+          btn.classList.remove('active-style');
+          btn.nextElementSibling.classList.remove('active-content');
+          btn.nextElementSibling.style.maxHeight = '0px';
+        });
+        this.classList.add('active-style');
+        this.nextElementSibling.classList.add('active-content');
+        this.nextElementSibling.style.maxHeight = this.nextElementSibling.scrollHeight + 80 + 'px';
+      } else {
+        this.classList.remove('active-style');
+        this.nextElementSibling.classList.remove('active-content');
+        this.nextElementSibling.style.maxHeight = '0px';
+      }
+    });
+  });
+};
+/* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (accordion);
+
+/***/ }),
+
 /***/ "./src/js/modules/calculator.js":
 /*!**************************************!*\
   !*** ./src/js/modules/calculator.js ***!
@@ -633,6 +668,8 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _modules_calculator__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! ./modules/calculator */ "./src/js/modules/calculator.js");
 /* harmony import */ var _modules_filter__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(/*! ./modules/filter */ "./src/js/modules/filter.js");
 /* harmony import */ var _modules_pictureSize__WEBPACK_IMPORTED_MODULE_7__ = __webpack_require__(/*! ./modules/pictureSize */ "./src/js/modules/pictureSize.js");
+/* harmony import */ var _modules_accordion__WEBPACK_IMPORTED_MODULE_8__ = __webpack_require__(/*! ./modules/accordion */ "./src/js/modules/accordion.js");
+
 
 
 
@@ -653,6 +690,7 @@ window.addEventListener('DOMContentLoaded', () => {
   (0,_modules_calculator__WEBPACK_IMPORTED_MODULE_5__["default"])('#size', '#material', '#options', '.promocode', '.calc-price');
   (0,_modules_filter__WEBPACK_IMPORTED_MODULE_6__["default"])();
   (0,_modules_pictureSize__WEBPACK_IMPORTED_MODULE_7__["default"])('.sizes-block');
+  (0,_modules_accordion__WEBPACK_IMPORTED_MODULE_8__["default"])('.accordion-heading', '.accordion-block');
 });
 })();
 
