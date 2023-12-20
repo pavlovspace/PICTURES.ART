@@ -1,11 +1,5 @@
-# Node.js
-node_modules/
-
-# macOS
+node_modules
 .DS_Store
-
-
-
-
-
-
+build
+dist
+package-lock.json
